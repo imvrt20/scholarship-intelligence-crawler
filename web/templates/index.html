@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Scholarship Intelligence</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f5f7fb;
+            color: #1f2937;
+        }
+
+        /* =====================================================
+           HEADER
+        ===================================================== */
+
+        .header {
+            background: #111827;
+            color: white;
+            padding: 25px 40px;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 30px;
+        }
+
+        .header p {
+            margin: 8px 0 0;
+            color: #d1d5db;
+        }
+
+
+        /* =====================================================
+           CONTAINER
+        ===================================================== */
+
+        .container {
+            max-width: 1400px;
+            margin: auto;
+            padding: 30px;
+        }
+
+
+        /* =====================================================
+           STATISTICS
+        ===================================================== */
+
+        .stats {
+            display: grid;
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+
+            box-shadow:
+                0 3px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .stat-card h3 {
+            margin: 0;
+            color: #6b7280;
+            font-size: 15px;
+        }
+
+        .stat-card .number {
+            font-size: 32px;
+            font-weight: bold;
+            margin-top: 8px;
+        }
+
+
+        /* =====================================================
+           SEARCH
+        ===================================================== */
+
+        .search-box {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+
+            box-shadow:
+                0 3px 12px rgba(0, 0, 0, 0.08);
+
+            margin-bottom: 30px;
+        }
+
+        .search-form {
+            display: grid;
+
+            grid-template-columns:
+                2fr 1fr auto auto;
+
+            gap: 12px;
+        }
+
+        .search-form input,
+        .search-form select {
+            padding: 13px;
+
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+
+            font-size: 15px;
+        }
+
+        .btn {
+            border: none;
+            border-radius: 8px;
+            padding: 13px 20px;
+
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        .btn-search {
+            background: #2563eb;
+            color: white;
+        }
+
+        .btn-reset {
+            background: #e5e7eb;
+            color: #111827;
+            text-decoration: none;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+
+        /* =====================================================
+           SCHOLARSHIP GRID
+        ===================================================== */
+
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            margin-bottom: 20px;
+        }
+
+        .results-header h2 {
+            margin: 0;
+        }
+
+        .results-count {
+            color: #6b7280;
+        }
+
+        .scholarship-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 20px;
+        }
+
+
+        /* =====================================================
+           SCHOLARSHIP CARD
+        ===================================================== */
+
+        .card {
+            background: white;
+
+            border-radius: 12px;
+
+            padding: 22px;
+
+            box-shadow:
+                0 3px 12px rgba(0, 0, 0, 0.08);
+
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card h3 {
+            margin-top: 0;
+            margin-bottom: 12px;
+
+            font-size: 19px;
+            line-height: 1.4;
+        }
+
+        .provider {
+            color: #2563eb;
+            font-weight: bold;
+
+            margin-bottom: 15px;
+        }
+
+        .info {
+            margin: 8px 0;
+            line-height: 1.5;
+        }
+
+        .label {
+            font-weight: bold;
+            color: #4b5563;
+        }
+
+        .amount {
+            font-size: 18px;
+            font-weight: bold;
+            color: #059669;
+        }
+
+        .deadline {
+            font-weight: bold;
+            color: #dc2626;
+        }
+
+        .eligibility {
+            color: #4b5563;
+            margin-top: 10px;
+
+            max-height: 80px;
+            overflow: hidden;
+        }
+
+
+        /* =====================================================
+           STATUS
+        ===================================================== */
+
+        .status {
+            display: inline-block;
+
+            padding: 5px 10px;
+
+            border-radius: 20px;
+
+            font-size: 12px;
+
+            font-weight: bold;
+
+            margin-top: 12px;
+
+            width: fit-content;
+        }
+
+        .verified {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .review {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+
+        /* =====================================================
+           BUTTON
+        ===================================================== */
+
+        .apply-btn {
+            display: block;
+
+            text-align: center;
+
+            margin-top: auto;
+            padding: 12px;
+
+            background: #2563eb;
+
+            color: white;
+
+            text-decoration: none;
+
+            border-radius: 8px;
+
+            font-weight: bold;
+
+            margin-top: 18px;
+        }
+
+        .apply-btn:hover {
+            background: #1d4ed8;
+        }
+
+
+        /* =====================================================
+           EMPTY
+        ===================================================== */
+
+        .empty {
+            background: white;
+
+            padding: 50px;
+
+            text-align: center;
+
+            border-radius: 12px;
+
+            grid-column: 1 / -1;
+        }
+
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+
+        @media (max-width: 1000px) {
+
+            .scholarship-grid {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+        }
+
+        @media (max-width: 700px) {
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .search-form {
+                grid-template-columns: 1fr;
+            }
+
+            .scholarship-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .container {
+                padding: 15px;
+            }
+
+            .header {
+                padding: 20px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     HEADER
+========================================================= -->
+
+<header class="header">
+
+    <h1>🎓 Scholarship Intelligence</h1>
+
+    <p>
+        Government scholarship discovery and verification platform
+    </p>
+
+</header>
+
+
+<!-- =========================================================
+     MAIN
+========================================================= -->
+
+<main class="container">
+
+
+    <!-- =====================================================
+         STATISTICS
+    ====================================================== -->
+
+    <section class="stats">
+
+        <div class="stat-card">
+
+            <h3>Total Scholarships</h3>
+
+            <div class="number">
+                {{ total }}
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <h3>Verified</h3>
+
+            <div class="number">
+                {{ verified }}
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <h3>Review Required</h3>
+
+            <div class="number">
+                {{ review_required }}
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         SEARCH
+    ====================================================== -->
+
+    <section class="search-box">
+
+        <form
+            method="GET"
+            action="/"
+            class="search-form"
+        >
+
+            <input
+                type="text"
+                name="search"
+                placeholder="Search scholarship, provider, course..."
+                value="{{ search }}"
+            >
+
+
+            <select name="provider">
+
+                <option value="">
+                    All Providers
+                </option>
+
+                {% for p in providers %}
+
+                    <option
+                        value="{{ p['provider'] }}"
+                        {% if selected_provider == p['provider'] %}
+                        selected
+                        {% endif %}
+                    >
+                        {{ p['provider'] }}
+                    </option>
+
+                {% endfor %}
+
+            </select>
+
+
+            <button
+                type="submit"
+                class="btn btn-search"
+            >
+                🔎 Search
+            </button>
+
+
+            <a
+                href="/"
+                class="btn btn-reset"
+            >
+                Reset
+            </a>
+
+        </form>
+
+    </section>
+
+
+    <!-- =====================================================
+         RESULTS HEADER
+    ====================================================== -->
+
+    <div class="results-header">
+
+        <h2>
+            Available Scholarships
+        </h2>
+
+        <div class="results-count">
+
+            Showing {{ scholarships|length }}
+            scholarship(s)
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         SCHOLARSHIP CARDS
+    ====================================================== -->
+
+    <section class="scholarship-grid">
+
+
+        {% if scholarships %}
+
+
+            {% for scholarship in scholarships %}
+
+
+                <article class="card">
+
+
+                    <h3>
+                        {{ scholarship['name'] }}
+                    </h3>
+
+
+                    <div class="provider">
+
+                        🏛️
+                        {{ scholarship['provider'] or 'Not specified' }}
+
+                    </div>
+
+
+                    {% if scholarship['amount'] %}
+
+                        <div class="info">
+
+                            <span class="label">
+                                💰 Amount:
+                            </span>
+
+                            <span class="amount">
+                                {{ scholarship['amount'] }}
+                            </span>
+
+                        </div>
+
+                    {% endif %}
+
+
+                    {% if scholarship['deadline'] %}
+
+                        <div class="info">
+
+                            <span class="label">
+                                📅 Deadline:
+                            </span>
+
+                            <span class="deadline">
+                                {{ scholarship['deadline'] }}
+                            </span>
+
+                        </div>
+
+                    {% else %}
+
+                        <div class="info">
+
+                            <span class="label">
+                                📅 Deadline:
+                            </span>
+
+                            Not specified
+
+                        </div>
+
+                    {% endif %}
+
+
+                    {% if scholarship['course_level'] %}
+
+                        <div class="info">
+
+                            <span class="label">
+                                🎓 Course:
+                            </span>
+
+                            {{ scholarship['course_level'] }}
+
+                        </div>
+
+                    {% endif %}
+
+
+                    {% if scholarship['eligibility'] %}
+
+                        <div class="eligibility">
+
+                            <span class="label">
+                                Eligibility:
+                            </span>
+
+                            {{ scholarship['eligibility'] }}
+
+                        </div>
+
+                    {% endif %}
+
+
+                    {% if scholarship['status'] == 'VERIFIED' %}
+
+                        <span class="status verified">
+                            ✓ VERIFIED
+                        </span>
+
+                    {% else %}
+
+                        <span class="status review">
+                            ⚠ REVIEW REQUIRED
+                        </span>
+
+                    {% endif %}
+
+
+                    {% if scholarship['application_url'] %}
+
+                        <a
+                            href="{{ scholarship['application_url'] }}"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="apply-btn"
+                        >
+                            Apply Now →
+                        </a>
+
+                    {% elif scholarship['official_source_url'] %}
+
+                        <a
+                            href="{{ scholarship['official_source_url'] }}"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="apply-btn"
+                        >
+                            View Official Source →
+                        </a>
+
+                    {% endif %}
+
+
+                </article>
+
+
+            {% endfor %}
+
+
+        {% else %}
+
+
+            <div class="empty">
+
+                <h2>
+                    No scholarships found
+                </h2>
+
+                <p>
+                    Try another search or provider.
+                </p>
+
+            </div>
+
+
+        {% endif %}
+
+
+    </section>
+
+
+</main>
+
+
+</body>
+
+</html>
